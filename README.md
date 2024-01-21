@@ -2,45 +2,77 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+### `setup enviroment`
 
-In the project directory, you can run:
+```bash
+npm install prettier eslint-plugin-prettier eslint-config-prettier -D
+```
 
-### `npm start`
+### tạo file `.editorconfig` để chia sẻ 1 số setting giữa các editor với nhau
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```bash
+[*]
+indent_style=space
+indent_size=2
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### tạo file `.prettierrc` để chia sẻ setting prettier giữa các editor
 
-### `npm test`
+```json
+{
+  "arrowParens": "always",
+  "semi": true,
+  "trailingComma": "none",
+  "tabWidth": 2,
+  "endOfLine": "auto",
+  "useTabs": false,
+  "singleQuote": true,
+  "printWidth": 120,
+  "jsxSingleQuote": true
+}
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### tạo file `.eslintrc` để chia sẻ setting eslint giữa các editor
 
-### `npm run build`
+```json
+{
+  "extends": ["react-app", "prettier"],
+  "plugins": ["react", "prettier"],
+  "rules": {
+    "prettier/prettier": [
+      "warn",
+      {
+        "arrowParens": "always",
+        "semi": true,
+        "trailingComma": "none",
+        "tabWidth": 2,
+        "endOfLine": "auto",
+        "useTabs": false,
+        "singleQuote": true,
+        "printWidth": 120,
+        "jsxSingleQuote": true
+      }
+    ]
+  }
+}
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### thêm scripts vào package.json
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```json
+{
+  "lint": "eslint --ext js,jsx,ts,tsx src/",
+  "lint:fix": "eslint --fix --ext js,jsx,ts,tsx src/",
+  "prettier": "prettier --check \"src/**/(*.jsx|*.js|*.tsx|*.ts|*.css|*.scss)\"",
+  "prettier:fix": "prettier --write \"src/**/(*.jsx|*.js|*.tsx|*.ts|*.css|*.scss)\""
+}
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Sau khi hoàn thành các bước ở trên, lúc này chỉ cần chạy
 
-### `npm run eject`
+- `npm run lint`: Kiểm tra lỗi eslint
+- `npm run lint:fix`: Fix lỗi liên quan đến eslint (đôi lúc có những lỗi bạn phải tự fix bằng tay)
+- `npm run prettier`: kiểm tra lỗi prettier format
+- `npm run prettier:fix`: Tự fix lỗi prettier format
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Thêm file `.prettierrignore` và `.eslintignore` để ignore những file bạn không muốn prettier và eslint format
